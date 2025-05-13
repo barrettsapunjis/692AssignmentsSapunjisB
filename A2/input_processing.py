@@ -30,13 +30,16 @@ class Sensor:
     # Replace these comments with your function commenting
     def update_status(self, param): # You may decide how to implement the arguments for this function
         while(True): 
+            print("You have selected: " + param " please enter one of the follow options:" + huh)
             userIn = input()
             if(self.checkInput(userIn)):
-                pass
+                self.status[param]["val"] = userIn
+                print(self.status[param]["val"])
 
     def checkInput(self, input):
-        if(input in self.status.values()): 
-            return True 
+        for keys in self.status: 
+            if (input in self.status[keys]["Options"]):
+                return True
         if(input in self.inputOptions):
             return True
         else: 
@@ -65,7 +68,7 @@ def main():
                     break
                 case "1": 
                     #option to change light color (Red, Green, Yellow)
-                    x = 1 
+                    sens.update_status("Light")
 
                 case "2": 
                     #option to change pedestrain status (Yes or No) 
