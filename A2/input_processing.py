@@ -32,29 +32,35 @@ class Sensor:
         }
         pass
 
-    # Replace these comments with your function commenting
-    def update_status(self, param): # You may decide how to implement the arguments for this function
+    # Given the parameter to be changed (Light, Person, Vehicle)
+    # the function will loop through promting the user with for an input with options and checking if the input is correct. 
+    # If correct, the input will be stored as the value for the respective parameter and the loop will break. 
+    def update_status(self, param): 
         while(True):
             options = self.status[param]["Options"]
             print(f"You have selected: {param}  please enter one of the follow options: {options}")
             userIn = input()
-            if(self.checkInput(userIn)):
+            if(self.checkInput(userIn, "status")):
                 self.status[param]["val"] = userIn
                 print(self.status[param]["val"])
                 return
             else:
                 print("Incorrect entry, please try again") 
         
-
-    def checkInput(self, input):
-        for keys in self.status: 
-            if (input in self.status[keys]["Options"]):
+    # Checks the input against the possible options initialized within the class. 
+    # Must be passed a name of the list/dict to be checked. 
+    def checkInput(self, input, list):
+        if (list == "status"):
+            for keys in self.status: 
+                if (input in self.status[keys]["Options"]):
+                    return True
+        elif(list == "inputOptions"):
+            if(input in self.inputOptions):
                 return True
-        if(input in self.inputOptions):
-            return True
         else: 
             return False 
-        
+    # Checks the current state of the sensor and compares it against the rules list. 
+    # Outputs the corresponding action, or a "stay" if no match is found in the rules dict.     
     def evaluate(self):
         input_tuple = (self.status["Light"]["val"], self.status["Person"]["val"], self.status["Vehicle"]["val"])
         for condition in self.rules:
@@ -63,12 +69,14 @@ class Sensor:
         return "Stay"
 
 
-        
+# Encapsulation of the main program loop. 
+# Takes in the sensor and prompts user to select a menu item.
+# Checks if the menu input is valid and initializes the status update loop. 
 def userInterface(sens: Sensor):
     while(True):
         print(f"Please select an option from {sens.inputOptions}")
         userIn = input()
-        if(sens.checkInput(userIn)): 
+        if(sens.checkInput(userIn, "inputOptions")): 
             match userIn: 
                 case "0": 
                     break
@@ -95,8 +103,8 @@ def userInterface(sens: Sensor):
 
 
 
-# The sensor object should be passed to this function to print the action message and current status
-# Replace these comments with your function commenting
+# Prints the current state/status of the sensor from current class variables
+# Prints the result of the evaluation (wether to go, stay, or have caution)
 def print_message(action, sensor: Sensor):
     print(f"The paramter {action} was changed to {sensor.status[action]["val"]}")
     print(f"Light = {sensor.status["Light"]["val"]}, Person = {sensor.status["Person"]["val"]}, Vehicle = {sensor.status["Vehicle"]["val"]} ")
@@ -105,11 +113,12 @@ def print_message(action, sensor: Sensor):
 
 
 
-# Complete the main function below
+# Creates a Sensor and enters the user interface loop. 
 def main():
     print("\n***ENSF 692 Car Vision Detector Processing Program***\n")
     sens = Sensor()
     userInterface(sens)
+
 
     
     
