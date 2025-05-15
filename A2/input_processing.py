@@ -30,7 +30,8 @@ class Sensor:
     # Replace these comments with your function commenting
     def update_status(self, param): # You may decide how to implement the arguments for this function
         while(True): 
-            print("You have selected: " + param " please enter one of the follow options:" + huh)
+            options = self.status[param]["Options"]
+            print(f"You have selected: {param},  please enter one of the follow options: {options}")
             userIn = input()
             if(self.checkInput(userIn)):
                 self.status[param]["val"] = userIn
