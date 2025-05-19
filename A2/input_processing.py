@@ -27,7 +27,7 @@ class Sensor:
         self.inputOptions = ["0", "1", "2", "3"]
 
         self.rules = { 
-            ("Green", "No", "No"): "Go",
+            ("Green", "No", "No"): "Proceed",
             ("Yellow", "No", "No"): "Caution"
         }
         pass
@@ -38,11 +38,10 @@ class Sensor:
     def update_status(self, param): 
         while(True):
             options = self.status[param]["Options"]
-            print(f"You have selected: {param}  please enter one of the follow options: {options}")
-            userIn = input()
+            userIn = input(f"You have selected: \"{param}\".  What changes have been identified? ")
             if(self.checkInput(userIn, "status")):
                 self.status[param]["val"] = userIn
-                print(self.status[param]["val"])
+                #print(self.status[param]["val"])
                 return
             else:
                 print("Incorrect entry, please try again") 
@@ -74,8 +73,8 @@ class Sensor:
 # Checks if the menu input is valid and initializes the status update loop. 
 def userInterface(sens: Sensor):
     while(True):
-        print(f"Please select an option from {sens.inputOptions}")
-        userIn = input()
+        print(f"Are changes detected in the vision input?")
+        userIn = input("Please select 1 for light, 2 for Person, and 3 for Vehicle or enter 0 to end the program: ")
         if(sens.checkInput(userIn, "inputOptions")): 
             match userIn: 
                 case "0": 
@@ -106,9 +105,11 @@ def userInterface(sens: Sensor):
 # Prints the current state/status of the sensor from current class variables
 # Prints the result of the evaluation (wether to go, stay, or have caution)
 def print_message(action, sensor: Sensor):
-    print(f"The paramter {action} was changed to {sensor.status[action]["val"]}")
-    print(f"Light = {sensor.status["Light"]["val"]}, Person = {sensor.status["Person"]["val"]}, Vehicle = {sensor.status["Vehicle"]["val"]} ")
-    print(sensor.evaluate())
+
+    print(f"The parameter {action} was changed to {sensor.status[action]["val"]}")
+    print(f"\n{sensor.evaluate()}")
+    print(f"\nLight = {sensor.status["Light"]["val"]}, Person = {sensor.status["Person"]["val"]}, Vehicle = {sensor.status["Vehicle"]["val"]} ")
+
     
 
 
