@@ -1,18 +1,11 @@
 # input_processing.py
 # Barrett Sapunjis, ENSF 692 Spring 2025
 # A terminal-based program for processing computer vision changes detected by a car.
-# Detailed specifications are provided via the Assignment 2 README file.
-# You must include the code provided below but you may delete the instructional comments.
-# You may add your own additional classes, functions, variables, etc. as long as they do not contradict the requirements (i.e. no global variables, etc.). 
-# You may import any modules from the standard Python library.
-# Remember to include your name and comments.
 
 
 
-# No global variables are permitted
 
 
-# You do not need to provide additional commenting above this class, just the user-defined functions within the class
 class Sensor:
 
     # Must include a constructor that uses default values
