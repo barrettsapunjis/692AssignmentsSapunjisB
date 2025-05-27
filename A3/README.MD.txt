@@ -57,3 +57,10 @@ Your application must meet the following design specifications:
 * Submit your repository HTTPS link to the Assignment 3 D2L DropBox.
 * Tip: If you want to learn more about a specific aspect of a Python object or the functionality of NumPy, remember to take a look at the official documentation!
 * Assignment is due on Tuesday, June 3 at 11:59 PM.
+
+
+
+# for me
+Dynamic program to intake school enrollment data for all three class years. Should store each class, the school name, and the year.
+Takes in a csv file, stores into numpy array. 
+
