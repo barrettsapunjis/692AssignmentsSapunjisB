@@ -1,5 +1,5 @@
 # school_data.py
-# AUTHOR NAME
+# Barrett Sapunjis
 #
 # A terminal-based application for computing and printing statistics based on a given input.
 # You must include the main listed below. You may add your own additional classes, functions, variables, etc. 
@@ -16,6 +16,33 @@ from given_data import year_2013, year_2014, year_2015, year_2016, year_2017, ye
 # You may add your own additional classes, functions, variables, etc.
 
 def readCSV(csvName):
+
+    """
+    Reads a csv to return an array of csv values, a map to the array, and a dictionary containing csv properties
+
+    Parameters
+    ----------
+
+    schools : list -> strings for each school name. 
+    rows: list -> contains all lines from csv
+    csvProperties : dict -> contains information about csv (I.E. number of lines, number of schools seen etc...)
+    array : float64 -> numpy array to be stored with csv information 
+    arrayMap : dict -> map to with key-values of school name and array location in master array. 
+    
+    ---
+    
+    args 
+    ---
+    none
+
+    ---
+
+    returns 
+    -------
+    array, 
+    arrayMap,
+    csvProperties 
+    """
     schools = []
     seenSchools = set()
     seenYears = set()
@@ -28,6 +55,7 @@ def readCSV(csvName):
                 seenSchools.add(row['School Code'])   
             if(row['ï»¿School Year'] not in seenYears):
                 seenYears.add(row['ï»¿School Year'])
+                schools
         
         csvProperties = {
             'numLines' : reader.line_num - 1,
@@ -56,6 +84,23 @@ def readCSV(csvName):
         return array, arrayMap, csvProperties
     
 def createMap(properties, years):
+    """
+    Takes in the csv properties, as well as the relevant years, to create a map for the parent array as a dictionary. 
+
+    args
+    ---
+    properties : dict -> contains csv properties 
+    years : int set -> contains a list of all  the ears seen in the csv 
+
+    ---
+
+    returns
+    ---
+    newDict : dict -> a dictionary representing a map to mask the array indexing 
+
+    ---
+    """
+
     newDict = {}
     i = 0
     for tup in properties['schools']:
@@ -70,9 +115,22 @@ def createMap(properties, years):
     return newDict
     
 def stage2(schoolArray, arrayMap : dict, csvProperties : dict):
+    """
+    Prompts user for school name or code and returns the corresponding school data
+
+    args
+    ---
+    schoolArray : float64 numpy array -> sub array containing information for an individual school
+    arrayMap : dict -> mapping of school names/codes to array indices
+    csvProperties : dict -> contains csv properties
+
+    returns
+    ---
+    newArray : numpy array containing school-specific data
+    schoolTuple : tuple containing school name and code
+    """
     while(True):
-        #userIn = input("Please enter a name or code of a school: ")
-        userIn = "Western Canada High School"
+        userIn = input("Please enter the high school name or school code: ")
         if userIn not in arrayMap.keys():
             print("The code or name you have entered is not in the data set, please try again")
             continue 
@@ -100,6 +158,7 @@ def main():
     
     # Prompt for user input
     schoolArray, school = stage2(AllSchoolsArray, arrayMap, csvProperties)
+    print(schoolArray)
     # Print Stage 2 requirements here
     print("\n***Requested School Statistics***\n")
     print(f"The selected school is: {school[0]} (Code: {school[1]})")
@@ -115,7 +174,9 @@ def main():
     for year in sorted(csvProperties['years']):
         totalSchoolEnrollments.append((year,int(np.sum(schoolArray[:,arrayMap[year]]))))
 
-        sum = int(sum + np.sum(schoolArray[:,:]))
+    sum = int(sum + np.sum(schoolArray[:,:]))
+    
+
     print(f"The total enrollment for all years can be found in the below list: ")
     print(totalSchoolEnrollments)
     print(f"The total enrollment in all 10 years was: {sum}")
